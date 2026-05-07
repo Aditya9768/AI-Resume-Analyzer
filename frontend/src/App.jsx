@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import Sidebar from "./components/Sidebar";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, LabelList, ResponsiveContainer } from "recharts";
+const API =
+import.meta.env.VITE_API_URL
 
 function App() {
   const [file, setFile] = useState(null);
