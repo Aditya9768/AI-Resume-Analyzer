@@ -1,16 +1,22 @@
 import { useState } from "react";
 import axios from "axios";
 import Sidebar from "./components/Sidebar";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, LabelList, ResponsiveContainer } from "recharts";
-const API =
-import.meta.env.VITE_API_URL
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  LabelList,
+  ResponsiveContainer,
+} from "recharts";
 
 function App() {
   const [file, setFile] = useState(null);
   const [result, setResult] = useState(null);
   const [jobDesc, setJobDesc] = useState("");
   const [matchResult, setMatchResult] = useState(null);
-  const [activeTab, setActiveTab] = useState("upload")
+  const [activeTab, setActiveTab] = useState("upload");
 
   const uploadResume = async () => {
     if (!file) return alert("Please select a file first.");
@@ -19,8 +25,8 @@ function App() {
     formData.append("file", file);
 
     const res = await axios.post(
-      "http://127.0.0.1:8000/upload-resume/",
-      formData
+      `${import.meta.env.VITE_API_URL}/upload-resume/`,
+      formData,
     );
 
     setResult(res.data);
@@ -29,13 +35,10 @@ function App() {
   const matchJob = async () => {
     if (!result) return alert("Please analyze a resume first.");
 
-    const res = await axios.post(
-      "http://127.0.0.1:8000/match-job/",
-      {
-        resume_id: result.id,
-        job_description: jobDesc
-      }
-    );
+    const res = await axios.post("http://127.0.0.1:8000/match-job/", {
+      resume_id: result.id,
+      job_description: jobDesc,
+    });
 
     setMatchResult(res.data);
   };
